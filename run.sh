@@ -9,8 +9,7 @@ export GOPATH=`pwd`
 export GOBIN=$GOPATH/go/bin
 mkdir -p $GOPATH/bin
 export PATH="$PATH:$GOBIN/"
-echo $PATH
-exit
+echo PATH=$PATH
 export DATE=$(date +%s)
 export ROOT_PW=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1  | tr -d '[:space:]')
 curl https://glide.sh/get | sh
