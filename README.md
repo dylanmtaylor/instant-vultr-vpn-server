@@ -9,6 +9,7 @@ This script instantly creates an OpenVPN server on the Vultr cloud. This is usef
   * `export VULTR_API_KEY=[YOUR_API_KEY_HERE]`
 * Checkout this repository and execute the `run.sh` script
   * `git clone https://github.com/dylanmtaylor/instant-vultr-vpn-server.git; cd instant-vultr-vpn-server; bash run.sh`
+* Whenever you want your traffic to be routed through your VPN, run `sudo openvpn openvpn_cert.ovpn`
 
 ## Some technical details
 
