@@ -54,7 +54,7 @@ newclient () {
 	echo "</tls-auth>" >> ~/\$1.ovpn
 }
 
-yum -y install epel-release yum-utils; yum -y install openvpn iptraf-ng htop fail2ban iotop iptables openssl wget ca-certificates
+yum -y install epel-release yum-utils; yum -y install openvpn iptraf-ng iftop htop fail2ban iotop iptables openssl wget ca-certificates
 
 export CLIENT="openvpn_cert"
 
