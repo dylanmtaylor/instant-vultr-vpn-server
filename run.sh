@@ -53,6 +53,10 @@ newclient () {
 	echo "</tls-auth>" >> ~/\$1.ovpn
 }
 
+echo "nameserver 1.1.1.1" > /etc/resolv.conf
+echo "nameserver 1.0.0.1" >> /etc/resolv.conf
+sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/fastestmirror.conf
+
 yum -y install epel-release yum-utils; yum -y install openvpn iptraf-ng iftop htop fail2ban iotop iptables openssl wget ca-certificates
 
 export CLIENT="openvpn_cert"
