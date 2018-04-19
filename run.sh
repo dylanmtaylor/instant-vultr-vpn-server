@@ -15,7 +15,7 @@ export DATE=$(date +%s)
 export ROOT_PW=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1  | tr -d '[:space:]')
 curl https://glide.sh/get | sh
 
-# Get vultr
+# Get Vultr CLI
 go get github.com/JamesClonk/vultr
 vultr version
 
@@ -28,6 +28,8 @@ OS=centos
 GROUPNAME=nobody
 RCLOCAL='/etc/rc.d/rc.local'
 ROOT_PW=$ROOT_PW
+PROTOCOL=udp
+PORT=1194
 echo \$ROOT_PW | passwd root --stdin # Set root password to our random value
 
 IP=\$(ip addr | grep 'inet' | grep -v inet6 | grep -vE '127\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | grep -o -E '[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}' | head -1)
@@ -55,8 +57,7 @@ newclient () {
 yum -y install epel-release yum-utils; yum -y install openvpn iptraf-ng htop fail2ban iotop iptables openssl wget ca-certificates
 
 export CLIENT="openvpn_cert"
-PROTOCOL=udp
-PORT=1194
+
 if [[ -d /etc/openvpn/easy-rsa/ ]]; then
   rm -rf /etc/openvpn/easy-rsa/
 fi
@@ -215,7 +216,7 @@ yum -y update # Security is important, but running this at the beginning slows t
 EOF
 vultr script create --type="boot" --name="openvpn_$DATE" --file="temp_script"
 
-sleep 3 # Wait for script to save
+sleep 3 # Wait for script to save; yes, this is a real race condition
 
 # Figure out which script we're Using
 SCRIPT_ID=$(vultr scripts | grep openvpn_$DATE | cut -f1)
