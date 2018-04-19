@@ -241,6 +241,7 @@ sleep 60 # give the server time to get assigned an IP address. If we don't wait 
 vultr server list | grep openvpn_$DATE
 SUBID=$(vultr server list | grep openvpn_$DATE | cut -f1  | tr -d '[:space:]')
 IP=$(vultr server list | grep openvpn_$DATE | cut -f3  | tr -d '[:space:]')
+echo "*** VPS SUBSCRIPTION ID: $SUBID"
 echo "*** VPS IP ADDRESS: $IP"
 echo "*** VPS ROOT PASSWORD: $ROOT_PW"
 
