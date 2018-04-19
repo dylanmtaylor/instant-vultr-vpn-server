@@ -1,6 +1,6 @@
 # Instant Vultr OpenVPN Server
 
-This script instantly creates an OpenVPN server on the Vultr cloud. This is useful as Vultr is billed hourly, and Vultr generously gives users 1TB of bandwidth on a newly created virtual server. By default, this script creates the 1GB server that is billed, at the time of writing, at $0.007/hr. 10 hours of usage is only 7 cents of Vultr credit, and the server can be considered disposable and destroyed when you are done with it from the Vultr admin console.
+This script instantly creates an OpenVPN server on the Vultr cloud. This is useful as Vultr is billed hourly, and Vultr generously gives users 1TB of bandwidth on a newly created virtual server. By default, this script creates the 1GB server that is billed, at the time of writing, at $0.007/hr. 10 hours of usage is only 7 cents of Vultr credit, and the server can be considered disposable and destroyed when you are done with it from the Vultr admin console. Vultr also offers a $2.50/month server that is $.004/hour, but at the time of writing, it is almost always sold out, so it's hardly a real option. If you'd like to try it anyways, you can change `-p 201` to `-p 200` in the script. However, availability is very limited to the point where it's currently available only in Miami (region 39). 
 
 ## Usage
 
