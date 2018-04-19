@@ -236,7 +236,7 @@ echo "*** VPS ROOT PASSWORD: $ROOT_PW"
 echo "Waiting 3 minutes to let the server finish generating the certificates"
 sleep 180
 rm -f openvpn_cert.ovpn
-sshpass -p \"$ROOT_PW\" scp root@$IP:/root/openvpn_cert.ovpn .
+sshpass -p "$ROOT_PW" scp root@$IP:/root/openvpn_cert.ovpn .
 
 # Cleanup startup script
 vultr script delete $(vultr script list | grep openvpn_$DATE | cut -f1)
