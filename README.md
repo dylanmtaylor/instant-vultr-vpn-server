@@ -24,3 +24,11 @@ This script instantly creates an OpenVPN server on the Vultr cloud. This is usef
 * When the script is done executing, the client certificate is stored to `/root/openvpn_cert.ovpn`
   * This script attempts to automatically copy openvpn_cert.ovpn to the working directory. This requires sshpass.
 * For privacy reasons, this script defaults to configuring OpenVPN with the 1.1.1.1 DNS server from Cloudflare.
+
+## Why not use Vultr's OpenVPN application template over this?
+
+* This is not installed by Vultr. While they haven't given us any reason to not trust them, setting it up yourself puts you in control, and they do not have access to any of the passwords.
+* This is significantly faster. The Vultr image provides you with an admin panel for OpenVPN and you get to spend time setting up users through it and clicking through pages on a web interface. This is a single command.
+ * Having nothing to configure makes the server more disposable, as less time is invested in setting it up.
+* In theory, this is harder for the provider to know that OpenVPN is running on the server at all, as it's not installed through their template.
+* This downloads the latest OpenVPN version available and the latest CentOS operating system packages. The template may not necessarily be up to date. By the time the script is done running, you have a fully patched system.
