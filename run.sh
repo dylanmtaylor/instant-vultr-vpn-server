@@ -10,6 +10,7 @@ export GOBIN=$GOPATH/go/bin
 mkdir -p $GOPATH/bin
 export PATH="$PATH:$GOBIN/"
 echo $PATH
+exit
 export DATE=$(date +%s)
 export ROOT_PW=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1  | tr -d '[:space:]')
 curl https://glide.sh/get | sh
@@ -221,7 +222,7 @@ SCRIPT_ID=$(vultr scripts | grep openvpn_$DATE | cut -f1)
 echo Using $SCRIPT_ID ...
 
 # Initialize a new server with the new startup script
-vultr server create --name="openvpn_$DATE" --plan=201 --os=167 --hostname="openvpn_$DATE" --script=$SCRIPT_ID
+vultr server create --name="openvpn_$DATE" --plan=201 --os=167 --hostname="openvpn" --script=$SCRIPT_ID
 echo "Waiting a bit to give the VPS time to come online"
 sleep 30 # give the server time to get assigned an IP address. If we don't wait long enough here, the server breaks
 IP=$(vultr server list | grep openvpn_$DATE | cut -f3  | tr -d '[:space:]')
