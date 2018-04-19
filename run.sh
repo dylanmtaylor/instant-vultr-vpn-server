@@ -3,6 +3,10 @@
 # This script only works with CentOS VPS systems as I'm too lazy to port it.
 
 # Prior to running, execute export VULTR_API_KEY=[YOUR_API_KEY_HERE]
+if [ -z "$VULTR_API_KEY" ];then
+	echo "Run export VULTR_API_KEY=[YOUR_API_KEY_HERE] before executing this script"
+	exit 1
+fi
 
 # Install glide and setup go locally
 export GOPATH=`pwd`
@@ -56,7 +60,6 @@ newclient () {
 echo "nameserver 1.1.1.1" > /etc/resolv.conf
 echo "nameserver 1.0.0.1" >> /etc/resolv.conf
 sed -i 's/enabled=1/enabled=0/g' /etc/yum/pluginconf.d/fastestmirror.conf
-
 yum -y install epel-release yum-utils; yum -y install openvpn iptraf-ng iftop htop fail2ban iotop iptables openssl wget ca-certificates
 
 export CLIENT="openvpn_cert"
@@ -223,18 +226,26 @@ sleep 3 # Wait for script to save; yes, this is a real race condition
 
 # Figure out which script we're Using
 SCRIPT_ID=$(vultr scripts | grep openvpn_$DATE | cut -f1)
-echo Using $SCRIPT_ID ...
+echo Using $SCRIPT_ID ...; echo
+
+echo "Listing Vultr regions:"
+vultr regions
+echo "Double check on Vultr's site to make sure 1024 MB inventory is avaialble in this region."
+read -p "Select a region (DC number): " dcid
+dcid=${dcid:-1}
 
 # Initialize a new server with the new startup script
-vultr server create --name="openvpn_$DATE" --plan=201 --os=167 --hostname="openvpn" --script=$SCRIPT_ID
+vultr server create --name="openvpn_$DATE" --plan=201 --os=167 --hostname="openvpn" --region=$dcid --script=$SCRIPT_ID
 echo "Waiting a bit to give the VPS time to come online"
-sleep 30 # give the server time to get assigned an IP address. If we don't wait long enough here, the server breaks
+sleep 60 # give the server time to get assigned an IP address. If we don't wait long enough here, the server breaks
+vultr server list | grep openvpn_$DATE
+SUBID=$(vultr server list | grep openvpn_$DATE | cut -f1  | tr -d '[:space:]')
 IP=$(vultr server list | grep openvpn_$DATE | cut -f3  | tr -d '[:space:]')
 echo "*** VPS IP ADDRESS: $IP"
 echo "*** VPS ROOT PASSWORD: $ROOT_PW"
 
-echo "Waiting 3 minutes to let the server finish generating the certificates"
-sleep 180
+echo "Waiting to let the server finish generating the certificates"
+sleep 150
 rm -f openvpn_cert.ovpn
 sshpass -p "$ROOT_PW" scp root@$IP:/root/openvpn_cert.ovpn .
 
