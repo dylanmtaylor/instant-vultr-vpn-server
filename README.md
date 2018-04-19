@@ -16,7 +16,7 @@ This script instantly creates an OpenVPN server on the Vultr cloud. This is usef
 * This repo contains a full copy of go that is compatible with the Vultr CLI written by James Clonk.
   * This CLI is utilized heavily in order to make API calls to the Vultr cloud
 * The startup script is heavily based on Nyr's openvpn installations script. You can use this script to add additional users.
-* The server name and name of the startup script is openvpn_[the current unix epoch time].
+* The server name and name of the startup script is `openvpn_[the current Unix epoch time]`.
   * Once the server is up and running, the startup script is removed from your Vultr account for security reasons as it contains the root password
 * A random root password is generated and set automatically. This is _different_ than the one Vultr assigns for security reasons.
 * The entire startup script, including commands to install packages including OpenVPN and set the password is written to `temp_script`
